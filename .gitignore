@@ -1,0 +1,8 @@
+*.pth
+*.jpg
+*.png
+*.pkl
+*.jpeg
+*.webp
+*.ipynb
+*/model_ckpt

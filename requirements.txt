@@ -1,0 +1,8 @@
+numpy
+torch
+torchvision
+opencv-python
+tqdm
+Pillow
+rembg
+git+https://github.com/facebookresearch/segment-anything.git
