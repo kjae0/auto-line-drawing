@@ -25,4 +25,4 @@ There are 3 steps for generation, 1) cartoonize, 2) segmentation mask generation
 
 ## Reference
 CartoonGAN: https://github.com/Yijunmaverick/CartoonGAN-Test-Pytorch-Torch <br>
-Segment Anything: https://github.com/facebookresearch/segment-anything#readme
+Segment Anything: https://github.com/facebookresearch/segment-anything
