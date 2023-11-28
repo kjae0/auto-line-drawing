@@ -6,4 +6,5 @@
 *.webp
 *.ipynb
 */model_ckpt
-*.DS_Store
+
+./test
