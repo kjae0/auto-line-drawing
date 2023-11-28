@@ -22,3 +22,7 @@ There are 3 steps for generation, 1) cartoonize, 2) segmentation mask generation
 ```
   sh run_SAM.sh
 ```
+
+## Reference
+CartoonGAN https://github.com/Yijunmaverick/CartoonGAN-Test-Pytorch-Torch
+Segment Anything https://github.com/facebookresearch/segment-anything#readme
