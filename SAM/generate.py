@@ -15,7 +15,7 @@ def main(args):
 
     os.makedirs(args.save_dir, exist_ok=True)
     
-    image_files = sorted(os.listdir(args.data_dir))
+    image_files = sorted(os.listdir(args.data_dir))[args.start_idx:]
     for im in tqdm(image_files, total=len(image_files), ncols=60):
         img = Image.open(os.path.join(args.data_dir, im))
         img = np.array(img)
@@ -31,6 +31,7 @@ if __name__ == "__main__":
     args.add_argument("--data_dir", type=str, required=True)
     args.add_argument("--save_dir", type=str, required=True)
     args.add_argument("--model_dir", type=str, required=True)
+    args.add_argument("--start_idx", type=int, default=0)
     
     args = args.parse_args()
     
