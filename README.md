@@ -1,7 +1,7 @@
 # line-drawing style transfer
 
 Style transfer from original image to line-drawing art. <br>
-There are 3 steps for generation, 1) cartoonize, 2) segmentation mask generation, 3) generate line-drawing art.
+There are 3 steps, 1) cartoonize, 2) segmentation mask generation, 3) line-drawing art generation.
 
 ### End-to-End Generation from origin image
 ```
