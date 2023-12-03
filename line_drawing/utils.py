@@ -3,6 +3,7 @@ import cv2
 import pickle
 import numpy as np
 
+from scipy.stats import mode
 from collections import deque
 from PIL import Image
 
@@ -173,7 +174,7 @@ def get_SAM_colormap(data_dir, cartoon_images, score_threshold=0.8, area_thresho
             indexing_expanded = m['segmentation'][:, :, np.newaxis]
 
             # Apply the indexing
-            indexed_target = np.where(indexing_expanded, cartoon_images[img_id], 0)
+            target_index = np.where(indexing_expanded, cartoon_images[img_id], 0)
             idx1, idx2 = np.where(m['segmentation'])
             mean_color = np.median(cartoon_images[img_id][idx1, idx2], axis=0)
             # print((m['segmentation'][:, :, np.newaxis]) * mean_color[np.newaxis, np.newaxis, :])
@@ -227,3 +228,30 @@ def colormap_postprocessor(colormap, origin):
             colormap_rgb[idx1, idx2, 2] += bfill.astype(np.uint8)
             
     return colormap_rgb
+ 
+def get_mode(patch):
+    patch_gray = patch.sum(axis=2)
+    non_zero_patch = [i for i in patch_gray.reshape(-1) if i]
+    mode_value = mode(non_zero_patch).mode
+    idx1, idx2 = np.where(patch_gray == mode_value[0])
+    return patch[idx1[0], idx2[0]]
+ 
+def fill_zero_values(cmap):
+    idx1, idx2 = np.where(cmap.sum(axis=2)==0)
+    
+    for i in range(len(idx1)):
+        patch = cmap[max(idx1[i]-2, 0):idx1[i]+3, min(idx2[i]-2, cmap.shape[1]):idx2[i]+3]
+        
+        kernel_size = 5
+        while 1:
+            if patch.sum() != 0:
+                break
+            else:
+                patch = cmap[max(idx1[i]-int(kernel_size//2), 0):idx1[i]+int(kernel_size//2), 
+                             min(idx2[i]-int(kernel_size//2), cmap.shape[1]):idx2[i]+int(kernel_size//2)]
+                kernel_size += 2
+                
+        mode_value = get_mode(patch)
+        cmap[idx1[i], idx2[i], :] = mode_value
+       
+    return cmap

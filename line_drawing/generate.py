@@ -71,6 +71,8 @@ def main(args):
     result = []
     for i in range(len(color_segment)):
         res = utils.colormap_postprocessor(color_segment[i], cartoon_images[i])
+        print(res.shape)
+        res = utils.fill_zero_values(res)
         idx1, idx2 = np.where(images[i].sum(axis=1)==0)
         res[idx1, idx2, :] *= 0
         res[thick_edges[i]!=0] = 0
